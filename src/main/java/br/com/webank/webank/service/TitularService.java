@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;
@@ -115,13 +114,12 @@ public class TitularService {
         List<ContaBancaria> adicionadas = new ArrayList<>();
 
         for(ContaBancariaRequestDTO contaBancariaRequest : contasRequest){
-
-            ContaBancaria contaBancaria = mapper.map(contaBancariaRequest, ContaBancaria.class);
-        
+         
+            ContaBancariaResponseDTO contaBancariaResponse = contaBancariaService.adicionar(contaBancariaRequest);
+            
+            ContaBancaria contaBancaria = mapper.map(contaBancariaResponse, ContaBancaria.class);
             contaBancaria.setTitular(titularModel);
-
-            contaBancaria = contaBancariaService.adicionar(contaBancaria);
-
+            
             adicionadas.add(contaBancaria);
         }
 

@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.webank.webank.dto.titular.TitularRequestDTO;
 import br.com.webank.webank.dto.titular.TitularResponseDTO;
-import br.com.webank.webank.model.Titular;
 import br.com.webank.webank.service.TitularService;
 
 @RestController

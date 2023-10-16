@@ -1,6 +1,5 @@
 package br.com.webank.webank.model.error;
 
-import java.util.Date;
 
 public class ErrorResposta {
     

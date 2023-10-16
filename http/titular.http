@@ -4,6 +4,19 @@ GET http://localhost:8080/api/titulares
 GET http://localhost:8080/api/titulares/1
 ###
 
+
+POST http://localhost:8080/api/titulares
+Content-Type: application/json
+
+{
+    "nome": "Lucas Caldas",
+    "cpfOuCnpj": "123.456.789-99",
+    "email": "lucasc@mail.com",
+    "telefone": "(21) 9 91999199",
+    "dataNascimento": "1990-08-06T00:00:00"
+}
+###
+
 POST http://localhost:8080/api/titulares
 Content-Type: application/json
 
@@ -30,3 +43,4 @@ Content-Type: application/json
         }
     ]
 }
+###
