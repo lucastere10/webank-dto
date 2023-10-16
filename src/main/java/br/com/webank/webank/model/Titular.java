@@ -55,6 +55,11 @@ public class Titular {
         this.contas.add(conta);
     }
 
+    
+    public Titular(long id) {
+        this.id = id;
+    }
+
     public Titular(){}
 
     

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
+import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
 import br.com.webank.webank.model.Endereco;
 import br.com.webank.webank.service.EnderecoService;
 
@@ -24,18 +26,18 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
     @GetMapping
-    public ResponseEntity<List<Endereco>> obterTodos(){
+    public ResponseEntity<List<EnderecoResponseDTO>> obterTodos(){
         return ResponseEntity.ok(enderecoService.obterTodos());
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Endereco> obterPorId(@PathVariable Long id){
+    public ResponseEntity<EnderecoResponseDTO> obterPorId(@PathVariable Long id){
         return ResponseEntity.ok(enderecoService.obterPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<Endereco> adicionar(@RequestBody Endereco endereco){
-        Endereco enderecoAdicionado = enderecoService.adicionar(endereco);
+    public ResponseEntity<EnderecoResponseDTO> adicionar(@RequestBody EnderecoRequestDTO endereco){
+        EnderecoResponseDTO enderecoAdicionado = enderecoService.adicionar(endereco);
 
         return ResponseEntity
             .status(201)
@@ -43,8 +45,8 @@ public class EnderecoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Endereco> atualizar(@PathVariable Long id, @RequestBody Endereco endereco){
-        Endereco enderecoAtualizado = enderecoService.atualizar(id, endereco);
+    public ResponseEntity<EnderecoResponseDTO> atualizar(@PathVariable Long id, @RequestBody EnderecoRequestDTO endereco){
+        EnderecoResponseDTO enderecoAtualizado = enderecoService.atualizar(id, endereco);
 
         return ResponseEntity
             .status(200)

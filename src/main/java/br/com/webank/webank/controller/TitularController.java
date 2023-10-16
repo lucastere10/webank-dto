@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.webank.webank.dto.titular.TitularRequestDTO;
+import br.com.webank.webank.dto.titular.TitularResponseDTO;
 import br.com.webank.webank.model.Titular;
 import br.com.webank.webank.service.TitularService;
 
@@ -25,18 +27,18 @@ public class TitularController {
     private TitularService titularService;
 
     @GetMapping
-    public ResponseEntity<List<Titular>> obterTodos(){
+    public ResponseEntity<List<TitularResponseDTO>> obterTodos(){
         return ResponseEntity.ok(titularService.obterTodos());
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Titular> obterPorId(@PathVariable Long id){
+    public ResponseEntity<TitularResponseDTO> obterPorId(@PathVariable Long id){
         return ResponseEntity.ok(titularService.obterPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<Titular> adicionar(@RequestBody Titular titular){
-        Titular titularAdicionado = titularService.adicionar(titular);
+    public ResponseEntity<TitularResponseDTO> adicionar(@RequestBody TitularRequestDTO titular){
+        TitularResponseDTO titularAdicionado = titularService.adicionar(titular);
 
         return ResponseEntity
             .status(201)
@@ -44,8 +46,8 @@ public class TitularController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Titular> atualizar(@PathVariable Long id, @RequestBody Titular titular){
-        Titular titularAtualizado = titularService.atualizar(id, titular);
+    public ResponseEntity<TitularResponseDTO> atualizar(@PathVariable Long id, @RequestBody TitularRequestDTO titular){
+        TitularResponseDTO titularAtualizado = titularService.atualizar(id, titular);
 
         return ResponseEntity
             .status(200)

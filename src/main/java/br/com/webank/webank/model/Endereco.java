@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
+
 @Entity
 @Table(name = "endereco")
 public class Endereco {
@@ -117,4 +119,21 @@ public class Endereco {
     public void setUf(String uf) {
         this.uf = uf;
     }
+
+    public Endereco() {
+    }
+
+    public Endereco(EnderecoRequestDTO enderecoRequest) {
+        id = 0l;
+        cep = enderecoRequest.getCep();
+        logradouro = enderecoRequest.getLogradouro();
+        numero = enderecoRequest.getNumero();
+        complemento = enderecoRequest.getComplemento(); 
+        bairro = enderecoRequest.getBairro();
+        cidade = enderecoRequest.getCidade();
+        uf = enderecoRequest.getUf();
+    }
+
+    
+    
 }

@@ -3,12 +3,20 @@ package br.com.webank.webank.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;
+import br.com.webank.webank.dto.contaBancaria.ContaBancariaResponseDTO;
+import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
+import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
+import br.com.webank.webank.dto.titular.TitularRequestDTO;
+import br.com.webank.webank.dto.titular.TitularResponseDTO;
 import br.com.webank.webank.model.ContaBancaria;
 import br.com.webank.webank.model.Endereco;
 import br.com.webank.webank.model.Titular;
@@ -26,66 +34,98 @@ public class TitularService {
     @Autowired
     private ContaBancariaService contaBancariaService;
 
-    public List<Titular> obterTodos(){
-        return titularRepository.findAll();
+    @Autowired
+    private ModelMapper mapper;
+
+    public List<TitularResponseDTO> obterTodos(){
+
+       List<Titular> titulares = titularRepository.findAll();
+
+        return titulares
+            .stream()
+            .map(titular -> mapper.map(titular, TitularResponseDTO.class))
+            .collect(Collectors.toList());
     }
 
-    public Titular obterPorId(long id){
+    public TitularResponseDTO obterPorId(long id){
         Optional<Titular> optTitular = titularRepository.findById(id);
 
         if(optTitular.isEmpty()){
             throw new RuntimeException("Nenhum registro encontrado para o ID: " + id);
         }
 
-        return optTitular.get();
+        return  mapper.map(optTitular.get(), TitularResponseDTO.class);
     }
 
     @Transactional
-    public Titular adicionar(Titular titular){
-   
-        // 1° Cadastrar o titular para poder cadastrar as demais entidades.
-        titular.setId(0);
-        titular = titularRepository.save(titular);
+    public TitularResponseDTO adicionar(TitularRequestDTO titularRequest){
 
-        // 2° Aqui eu cadastro o endereco
-        Endereco endereco = titular.getEndereco();
-        if(endereco.getId() == 0){
-            endereco.setTitular(titular);
-            endereco = enderecoService.adicionar(endereco);
+        // Cadastrando o titular... 
+        Titular titularModel = adicionarTitular(titularRequest);
+        EnderecoRequestDTO enderecoRequest = titularRequest.getEndereco();
+        
+        titularRequest.setId(titularModel.getId());
 
-            titular.setEndereco(endereco);
-        }
-        //3° Aqui cadastramos as contas bancárias.
-        List<ContaBancaria> adicionadas = new ArrayList<>();
-        for(ContaBancaria contaBancaria : titular.getContas()){
+        enderecoRequest.setTitular(titularRequest);
+        Endereco enderecoModel = adicionarEndereco(enderecoRequest);
 
-            if(contaBancaria.getId() == 0){
+        titularModel.setEndereco(enderecoModel);
 
-                contaBancaria.setTitular(titular);
-                contaBancaria = contaBancariaService.adicionar(contaBancaria);
+        List<ContaBancaria> contas = adicionarContas(titularRequest.getContas(), titularModel);
+        titularModel.setContas(contas);
 
-                adicionadas.add(contaBancaria);
-            }
-        }
-
-        titular.setContas(adicionadas);
-        return titular;
+        return mapper.map(titularModel, TitularResponseDTO.class);
     }
 
-    public Titular atualizar(long id, Titular titular){
+    public TitularResponseDTO atualizar(long id, TitularRequestDTO titular){
 
         // Se não lançar exception é porque o cara existe no banco.
         obterPorId(id);
 
         titular.setId(id);
-        return titularRepository.save(titular);
-     
+        Titular titularModel = titularRepository.save(mapper.map(titular, Titular.class));
+
+        return mapper.map(titularModel, TitularResponseDTO.class);
     }
 
     public void deletar(Long id){
         obterPorId(id);
 
         titularRepository.deleteById(id);
+    }
+
+    private Titular adicionarTitular(TitularRequestDTO titularRequest){
+
+        Titular titularModel = mapper.map(titularRequest, Titular.class);
+        titularModel.setId(0);
+        titularModel = titularRepository.save(titularModel);
+
+        return titularModel;
+    }
+
+    private Endereco adicionarEndereco(EnderecoRequestDTO enderecoRequest){
+        
+        EnderecoResponseDTO enderecoResponse = enderecoService.adicionar(enderecoRequest);
+
+        return mapper.map(enderecoResponse, Endereco.class);
+    }
+
+    private List<ContaBancaria> adicionarContas(List<ContaBancariaRequestDTO> contasRequest, Titular titularModel){
+        
+        List<ContaBancaria> adicionadas = new ArrayList<>();
+
+        for(ContaBancariaRequestDTO contaBancariaRequest : contasRequest){
+
+            ContaBancaria contaBancaria = mapper.map(contaBancariaRequest, ContaBancaria.class);
+        
+            contaBancaria.setTitular(titularModel);
+
+            contaBancaria = contaBancariaService.adicionar(contaBancaria);
+
+            adicionadas.add(contaBancaria);
+        }
+
+        return adicionadas;
     }
 
 }
