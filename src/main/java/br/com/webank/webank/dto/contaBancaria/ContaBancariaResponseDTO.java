@@ -4,8 +4,17 @@ import java.util.Date;
 
 public class ContaBancariaResponseDTO extends ContaBancariaBaseDTO {
     
+    private long id;
     private Date dataCadastro;
-    
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Date getDataCadastro() {
         return dataCadastro;
     }
