@@ -1,15 +1,17 @@
 package br.com.webank.webank.dto.contaBancaria;
+import br.com.webank.webank.dto.titular.TitularRequestDTO;
 
 
 public class ContaBancariaRequestDTO extends ContaBancariaBaseDTO {
    
-    private Long idTitular;
+    private TitularRequestDTO titular;
 
-    public Long getIdTitular() {
-        return idTitular;
+    public TitularRequestDTO getTitular() {
+        return titular;
     }
 
-    public void setIdTitular(Long idTitular) {
-        this.idTitular = idTitular;
-    }    
+    public void setTitular(TitularRequestDTO titular) {
+        this.titular = titular;
+    }   
+    
 }

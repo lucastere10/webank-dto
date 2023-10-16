@@ -2,10 +2,11 @@ package br.com.webank.webank.dto.contaBancaria;
 
 public abstract class ContaBancariaBaseDTO {
     
-    private long id;
-    private String agencia;
-    private String numero; 
-    private double saldo;
+    //protected long id;
+    protected String agencia;
+    protected String numero; 
+    protected double saldo;
+    protected Long idTitular;
 
     public String getAgencia() {
         return agencia;
@@ -31,11 +32,12 @@ public abstract class ContaBancariaBaseDTO {
         this.saldo = saldo;
     }
 
-    public long getId() {
-        return id;
+    public Long getIdTitular() {
+        return idTitular;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdTitular(Long idTitular) {
+        this.idTitular = idTitular;
     }
+
 }
