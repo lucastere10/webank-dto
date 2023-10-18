@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
 import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
 import br.com.webank.webank.model.Endereco;
+import br.com.webank.webank.model.Titular;
 import br.com.webank.webank.paser.EnderecoParser;
 import br.com.webank.webank.repository.EnderecoRepository;
 

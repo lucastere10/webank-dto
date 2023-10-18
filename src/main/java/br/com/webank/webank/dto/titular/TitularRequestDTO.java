@@ -1,5 +1,6 @@
 package br.com.webank.webank.dto.titular;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;

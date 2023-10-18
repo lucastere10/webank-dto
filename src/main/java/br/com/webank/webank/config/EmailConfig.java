@@ -1,5 +1,6 @@
 package br.com.webank.webank.config;
 
+
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
-@PropertySource("classpath:env/email.properties")
+@PropertySource("classpath:env/mail.properties")
 public class EmailConfig {
     
     @Autowired
@@ -28,14 +29,11 @@ public class EmailConfig {
         mailSender.setPassword(env.getProperty("mail.smtp.password"));
 
         Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol","smtp");
-        props.put("mail.smtp.auth","true");
-        props.put("mail.smtp.starttls.enable","true");
-        props.put("mail.debug","true");
+        props.put("mail.transport.protocol",  "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.debug","true");
 
         return mailSender;
-        
     }
-
-
 }

@@ -2,10 +2,10 @@ package br.com.webank.webank.dto.contaBancaria;
 
 import java.util.Date;
 
-public class ContaBancariaResponseDTO extends ContaBancariaBaseDTO {
-    
+public class ContaBancariaResponseDTO extends ContaBancariaRequestDTO {
     private long id;
     private Date dataCadastro;
+    
 
     public long getId() {
         return id;

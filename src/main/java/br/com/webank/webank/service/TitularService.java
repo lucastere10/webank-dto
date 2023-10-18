@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;
@@ -19,6 +20,7 @@ import br.com.webank.webank.dto.titular.TitularResponseDTO;
 import br.com.webank.webank.model.ContaBancaria;
 import br.com.webank.webank.model.Endereco;
 import br.com.webank.webank.model.Titular;
+import br.com.webank.webank.model.email.Email;
 import br.com.webank.webank.repository.TitularRepository;
 
 @Service
@@ -35,6 +37,9 @@ public class TitularService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private EmailService emailService;
 
     public List<TitularResponseDTO> obterTodos(){
 
@@ -114,16 +119,18 @@ public class TitularService {
         List<ContaBancaria> adicionadas = new ArrayList<>();
 
         for(ContaBancariaRequestDTO contaBancariaRequest : contasRequest){
-         
-            ContaBancariaResponseDTO contaBancariaResponse = contaBancariaService.adicionar(contaBancariaRequest);
-            
-            ContaBancaria contaBancaria = mapper.map(contaBancariaResponse, ContaBancaria.class);
+
+            ContaBancaria contaBancaria = mapper.map(contaBancariaRequest, ContaBancaria.class);
+        
             contaBancaria.setTitular(titularModel);
-            
+
+            contaBancaria = contaBancariaService.adicionar(contaBancaria);
+
             adicionadas.add(contaBancaria);
         }
 
         return adicionadas;
     }
+
 
 }

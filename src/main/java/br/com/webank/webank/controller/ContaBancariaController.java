@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;
-import br.com.webank.webank.dto.contaBancaria.ContaBancariaResponseDTO;
+import br.com.webank.webank.model.ContaBancaria;
 import br.com.webank.webank.service.ContaBancariaService;
 
 @RestController
@@ -25,18 +24,18 @@ public class ContaBancariaController {
     private ContaBancariaService contaBancariaService;
 
     @GetMapping
-    public ResponseEntity<List<ContaBancariaResponseDTO>> obterTodos(){
+    public ResponseEntity<List<ContaBancaria>> obterTodos(){
         return ResponseEntity.ok(contaBancariaService.obterTodos());
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<ContaBancariaResponseDTO> obterPorId(@PathVariable Long id){
+    public ResponseEntity<ContaBancaria> obterPorId(@PathVariable Long id){
         return ResponseEntity.ok(contaBancariaService.obterPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<ContaBancariaResponseDTO> adicionar(@RequestBody ContaBancariaRequestDTO contaBancaria){
-        ContaBancariaResponseDTO contaBancariaAdicionado = contaBancariaService.adicionar(contaBancaria);
+    public ResponseEntity<ContaBancaria> adicionar(@RequestBody ContaBancaria contaBancaria){
+        ContaBancaria contaBancariaAdicionado = contaBancariaService.adicionar(contaBancaria);
 
         return ResponseEntity
             .status(201)
@@ -44,8 +43,8 @@ public class ContaBancariaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContaBancariaResponseDTO> atualizar(@PathVariable Long id, @RequestBody ContaBancariaRequestDTO contaBancaria){
-        ContaBancariaResponseDTO contaBancariaAtualizado = contaBancariaService.atualizar(id, contaBancaria);
+    public ResponseEntity<ContaBancaria> atualizar(@PathVariable Long id, @RequestBody ContaBancaria contaBancaria){
+        ContaBancaria contaBancariaAtualizado = contaBancariaService.atualizar(id, contaBancaria);
 
         return ResponseEntity
             .status(200)

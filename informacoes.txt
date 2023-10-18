@@ -1,0 +1,33 @@
+Autenticacao e Autorizacao.
+
+Autenticação é quando a api não sabe quem é vc e vc precisa se apresentar para ela. (Login)
+Autorizacao é quando a api sabe quem é vc e tem que validar se vc pode ou n~çao fazer algo nela.
+Token JWT
+
+Modelo 
+    (Usuario)
+    id: 1
+    nome: Michael Vieira
+    email: MichaelVieira@gmail.com
+    senha: 1s3d21asf4sdf1sdf4sdf1sdfd4f1dsf1sd4fsd1f
+    dataCadastro: "2023-10-16T21:47:55"
+    perfil: GERENTE
+
+    (Usuario)
+    id: 2
+    nome: Weberson Rodrigues
+    email: wr@gmail.com
+    senha: 2s3d21asf4sdf1sdf4sdf1sdfd4f1dsf1sd4fsd1f
+    dataCadastro: "2023-10-16T21:47:55"
+    perfil: VENDEDOR
+
+    AUTHENTICATION
+
+    1° Entender como funciona o Token JWT
+    2° Criar um serviço que saiba gerar o token.
+    3° Criar um filter de requisição
+    4° Criar um SecurityConfig.
+
+    Cors
+
+    UserDetails

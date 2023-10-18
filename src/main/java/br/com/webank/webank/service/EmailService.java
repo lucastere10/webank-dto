@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.webank.webank.model.email.Email;
 
-
 @Service
 public class EmailService {
     
@@ -18,20 +17,26 @@ public class EmailService {
     private JavaMailSender javaMailSender;
 
     public void enviar(Email email){
+
         try {
+
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
             helper.setFrom(email.getRemetente());
             helper.setSubject(email.getAssunto());
-            helper.setTo(email.getDestinatarios().toArray(new String[email.getDestinatarios().size()]));
-            helper.setText(email.getMensagem()); 
+            helper.setText(email.getMensagem(), true);  //true para html
+            helper.setTo(email.getDestinatarios()
+                .toArray(new String[email.getDestinatarios().size()])
+            );
 
             javaMailSender.send(mimeMessage);
+
         } catch (MessagingException e) {
-            System.out.println("Não foi possivel enviar o seguinte email:");
+            System.out.println("Deu ruim no envio de e-mail:");
             System.out.println(e.getMessage());
         }
-    }
+     
 
+    }
 }
