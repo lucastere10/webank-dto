@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;
-import br.com.webank.webank.dto.contaBancaria.ContaBancariaResponseDTO;
 import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
 import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
 import br.com.webank.webank.dto.titular.TitularRequestDTO;
@@ -20,7 +18,6 @@ import br.com.webank.webank.dto.titular.TitularResponseDTO;
 import br.com.webank.webank.model.ContaBancaria;
 import br.com.webank.webank.model.Endereco;
 import br.com.webank.webank.model.Titular;
-import br.com.webank.webank.model.email.Email;
 import br.com.webank.webank.repository.TitularRepository;
 
 @Service

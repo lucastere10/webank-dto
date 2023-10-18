@@ -2,10 +2,6 @@ package br.com.webank.webank.service;
 
 import java.util.List;
 
-import br.com.webank.webank.dto.contaBancaria.ContaBancariaRequestDTO;
-import br.com.webank.webank.dto.contaBancaria.ContaBancariaResponseDTO;
-import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
-import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
 import br.com.webank.webank.dto.titular.TitularRequestDTO;
 import br.com.webank.webank.dto.titular.TitularResponseDTO;
 

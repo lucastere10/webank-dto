@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
 import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
-import br.com.webank.webank.model.Endereco;
 import br.com.webank.webank.model.email.Email;
 import br.com.webank.webank.service.EmailService;
 import br.com.webank.webank.service.EnderecoService;
