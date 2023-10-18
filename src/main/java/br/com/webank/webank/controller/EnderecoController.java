@@ -1,5 +1,6 @@
 package br.com.webank.webank.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.webank.webank.dto.endereco.EnderecoRequestDTO;
 import br.com.webank.webank.dto.endereco.EnderecoResponseDTO;
+import br.com.webank.webank.model.email.Email;
+import br.com.webank.webank.service.EmailService;
 import br.com.webank.webank.service.EnderecoService;
 
 @RestController
@@ -23,6 +26,9 @@ public class EnderecoController {
     
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping
     public ResponseEntity<List<EnderecoResponseDTO>> obterTodos(){
@@ -60,4 +66,19 @@ public class EnderecoController {
             .status(204)
             .build();
     }
+
+    @GetMapping("/email")
+    public ResponseEntity<?> testeEnvioEmail(){
+        List<String> destinatarios = new ArrayList<>();
+        destinatarios.add("lucastere10@gmail.com");
+        String mensagem = "<h1> Teste </h1>";
+
+        Email email = new Email("Assunto", mensagem, "lucastere10@mail.com", destinatarios);
+
+        emailService.enviar(email);
+
+        return ResponseEntity.status(200).body("deu bom");
+
+    }
+
 }
